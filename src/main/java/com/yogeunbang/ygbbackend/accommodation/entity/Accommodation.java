@@ -19,6 +19,7 @@ public class Accommodation {
     private Integer checkOut;
     private Double lat;
     private Double lng;
+    private String address;
     private Integer category;
     private String link;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "spot_id")
