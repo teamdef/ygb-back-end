@@ -12,4 +12,5 @@ public class Region {
     private String name;
     private Boolean open;
     private String image;
+    private String banner;
 }
