@@ -30,7 +30,6 @@ public class AccommodationControllerTest {
         //given
         given(accommodationService.findRegions())
             .willReturn(Arrays.asList(new RegionDto(Region.builder()
-                .id(1L)
                 .name("제주도")
                 .open(Boolean.TRUE)
                 .banner("배너이미지 경로")

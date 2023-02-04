@@ -20,7 +20,7 @@ public class Region {
     private String banner;
 
     @Builder
-    public Region(Long id, String name, Boolean open, String image, String banner) {
+    public Region(String name, Boolean open, String image, String banner) {
         this.id = id;
         this.name = name;
         this.open = open;
