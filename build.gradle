@@ -28,7 +28,10 @@ test {
 	finalizedBy jacocoTestReport // jacocoTestReport is always generated after tests run
 
 	jacoco {
-		excludes += ["com/yogeunbang/ygbbackend/YgbBackEndApplication.class"]
+		excludes += [
+				"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
+				"com/yogeunbang/ygbbackend/*repo*"
+		]
 	}
 }
 
@@ -42,7 +45,10 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it,
-					exclude: ["com/yogeunbang/ygbbackend/YgbBackEndApplication.class"])
+					exclude: [
+							"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
+							"com/yogeunbang/ygbbackend/*repo*"
+					])
 		}))
 	}
 
