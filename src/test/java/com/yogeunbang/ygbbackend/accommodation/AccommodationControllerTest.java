@@ -7,8 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.yogeunbang.ygbbackend.accommodation.dto.AccommodationDto;
 import com.yogeunbang.ygbbackend.accommodation.dto.RegionDto;
 import com.yogeunbang.ygbbackend.accommodation.dto.SpotDto;
+import com.yogeunbang.ygbbackend.accommodation.entity.Accommodation;
 import com.yogeunbang.ygbbackend.accommodation.entity.Region;
 import com.yogeunbang.ygbbackend.accommodation.entity.Spot;
 import java.util.Arrays;
@@ -64,5 +66,28 @@ public class AccommodationControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[0].name").value("성산일출봉"));
+    }
+
+    @Test
+    public void 숙소_조회_테스트() throws Exception {
+
+        //given
+        given(accommodationService.findAccommodations(any(Long.class)))
+            .willReturn(Arrays.asList(new AccommodationDto(Accommodation.builder()
+                .name("히든스테이")
+                .time(5)
+                .price(54900)
+                .address(null)
+                .category(4)
+                .build())));
+
+        //when & then
+        mvc.perform(get("/spots/1/accommodations"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.[0].name").value("히든스테이"))
+            .andExpect(jsonPath("$.[0].time").value(5))
+            .andExpect(jsonPath("$.[0].price").value(54900))
+            .andExpect(jsonPath("$.[0].type").value(4));
     }
 }

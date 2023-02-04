@@ -4,10 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.yogeunbang.ygbbackend.accommodation.dto.AccommodationDto;
 import com.yogeunbang.ygbbackend.accommodation.dto.RegionDto;
 import com.yogeunbang.ygbbackend.accommodation.dto.SpotDto;
+import com.yogeunbang.ygbbackend.accommodation.entity.Accommodation;
 import com.yogeunbang.ygbbackend.accommodation.entity.Region;
 import com.yogeunbang.ygbbackend.accommodation.entity.Spot;
+import com.yogeunbang.ygbbackend.accommodation.repo.AccommodationRepo;
 import com.yogeunbang.ygbbackend.accommodation.repo.RegionRepo;
 import com.yogeunbang.ygbbackend.accommodation.repo.SpotRepo;
 import java.util.List;
@@ -27,6 +30,8 @@ class AccommodationServiceTest {
     private RegionRepo regionRepo;
     @Mock
     private SpotRepo spotRepo;
+    @Mock
+    private AccommodationRepo accommodationRepo;
 
     @Test
     public void 지역_조회_테스트() {
@@ -62,5 +67,23 @@ class AccommodationServiceTest {
         //then
         assertThat(spots.get(0).getName()).isEqualTo("성산일출봉");
         assertThat(spots.get(1).getName()).isEqualTo("중문 관광단지");
+    }
+
+    @Test
+    public void 숙소_조회_테스트() {
+
+        //given
+        given(accommodationRepo.findBySpot_Id(any(Long.class)))
+            .willReturn(List.of(
+                Accommodation.builder().name("히든스테이").build(),
+                Accommodation.builder().name("구구봉게스트하우스").build())
+            );
+
+        //when
+        List<AccommodationDto> accommodations = accommodationService.findAccommodations(1L);
+
+        //then
+        assertThat(accommodations.get(0).getName()).isEqualTo("히든스테이");
+        assertThat(accommodations.get(1).getName()).isEqualTo("구구봉게스트하우스");
     }
 }
