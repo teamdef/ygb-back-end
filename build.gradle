@@ -30,7 +30,8 @@ test {
 	jacoco {
 		excludes += [
 				"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
-				"com/yogeunbang/ygbbackend/*repo*"
+				"com/yogeunbang/ygbbackend/*repo*",
+				"com/yogeunbang/ygbbackend/member/NaverService.class",
 		]
 	}
 }
@@ -47,7 +48,8 @@ jacocoTestReport {
 			fileTree(dir: it,
 					exclude: [
 							"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
-							"com/yogeunbang/ygbbackend/*repo*"
+							"com/yogeunbang/ygbbackend/*repo*",
+							"com/yogeunbang/ygbbackend/member/NaverService.class",
 					])
 		}))
 	}
