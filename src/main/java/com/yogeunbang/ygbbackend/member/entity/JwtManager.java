@@ -39,8 +39,8 @@ public class JwtManager {
 
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
-            return !claimsJws.getBody().getExpiration().before(new Date());
+            Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
+            return true;
         } catch (JwtException e) {
             log.info(e.toString());
         }
