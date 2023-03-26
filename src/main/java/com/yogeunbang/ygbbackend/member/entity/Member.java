@@ -15,10 +15,12 @@ public class Member {
     private String identity;
     private String nickname;
     private String profileImage;
+    private String accessToken;
 
-    public Member(String identity, String nickname, String profileImage) {
+    public Member(String identity, String nickname, String profileImage, String accessToken) {
         this.identity = identity;
         this.nickname = nickname;
         this.profileImage = profileImage;
+        this.accessToken = accessToken;
     }
 }

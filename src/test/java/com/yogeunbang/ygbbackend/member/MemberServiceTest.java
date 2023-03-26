@@ -31,7 +31,7 @@ public class MemberServiceTest {
     public void 로그인_테스트() {
 
         //given
-        Member member = new Member("identity", "nickName", "imgLink");
+        Member member = new Member("identity", "nickName", "imgLink", "accessToken");
         given(naverService.requestMember(any()))
             .willReturn(member);
         given(memberRepo.findByIdentity("identity")).willReturn(List.of(member));
@@ -48,7 +48,7 @@ public class MemberServiceTest {
     public void 회원가입_테스트() {
 
         //given
-        Member member = new Member("identity", "nickName", "imgLink");
+        Member member = new Member("identity", "nickName", "imgLink","accessToken");
         given(naverService.requestMember(any())).willReturn(member);
         given(memberRepo.findByIdentity("identity")).willReturn(List.of());
         given(jwtManager.makeJwt(member.getIdentity())).willReturn("jwtToken");
