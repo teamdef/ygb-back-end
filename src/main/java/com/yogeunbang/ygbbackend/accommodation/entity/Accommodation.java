@@ -27,9 +27,10 @@ public class Accommodation {
     private Integer checkOut;
     private Double lat;
     private Double lng;
-    private String address;
+    private Integer address;
     private Integer category;
     private String link;
+    private String homePage;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "spot_id")
     private Spot spot;
     @OneToMany(mappedBy = "accommodation")
@@ -37,7 +38,7 @@ public class Accommodation {
 
     @Builder
     public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, String address, Integer category,
+        Integer checkOut, Integer address, Integer category,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
@@ -52,7 +53,7 @@ public class Accommodation {
 
     @Builder
     public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, String address, Integer category, Double lat, Double lng,
+        Integer checkOut, Integer address, Integer category, Double lat, Double lng,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
