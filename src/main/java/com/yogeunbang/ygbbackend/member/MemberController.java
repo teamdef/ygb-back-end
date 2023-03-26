@@ -2,6 +2,8 @@ package com.yogeunbang.ygbbackend.member;
 
 import com.yogeunbang.ygbbackend.member.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +18,10 @@ public class MemberController {
     public TokenDto authenticate(@RequestBody TokenDto token) {
         System.out.println(token);
         return memberService.authenticate(token);
+    }
+
+    @DeleteMapping("/members/{id}")
+    public void unregister(@PathVariable Long id) {
+        memberService.unregister(id);
     }
 }

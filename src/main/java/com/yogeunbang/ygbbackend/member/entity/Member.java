@@ -23,4 +23,8 @@ public class Member {
         this.profileImage = profileImage;
         this.accessToken = accessToken;
     }
+
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }

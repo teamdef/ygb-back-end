@@ -14,12 +14,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NaverService {
      // Bearer 다음에 공백 추가
     private final String apiURL = "https://openapi.naver.com/v1/nid/me";
+
+    @Value("${key.secret}")
+    private String clientSecret;
+    @Value("${key.id}")
+    private String clientId;
 
 
     public Member requestMember(TokenDto token) {
@@ -30,7 +36,8 @@ public class NaverService {
         Map<String, String> memberInfo = getNicknameAndId(responseBody);
 
         return new Member(
-            memberInfo.get("identity"), memberInfo.get("nickname"), memberInfo.get("profile"));
+            memberInfo.get("identity"), memberInfo.get("nickname"),
+            memberInfo.get("profile"), memberInfo.get("accessToken"));
     }
 
     private static String get(String apiUrl, Map<String, String> requestHeaders){
@@ -103,5 +110,18 @@ public class NaverService {
         }
 
         throw new RuntimeException("로그인 실패!!");
+    }
+
+    public String unregister(Member member) {
+        String url = "https://nid.naver.com/oauth2.0/token?grant_type=delete&service_provider=NAVER";
+        Map<String, String> requestParams = new HashMap<>();
+        requestParams.put("access_token", member.getAccessToken());
+        requestParams.put("client_id", clientId);
+        requestParams.put("client_secret", clientSecret);
+        for (String key : requestParams.keySet()) {
+            url += "&" + key + "=" + requestParams.get(key);
+        }
+        String response = get(url, new HashMap<String, String>());
+        return response;
     }
 }
