@@ -2,6 +2,7 @@ package com.yogeunbang.ygbbackend.member;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -44,5 +45,13 @@ public class MemberControllerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.accessToken").value("jwtToken"));
+    }
+
+    @Test
+    public void 회원탈퇴_테스트() throws Exception {
+
+        //when & then
+        mvc.perform(delete("/members/1"))
+            .andExpect(status().isOk());
     }
 }

@@ -59,4 +59,11 @@ public class MemberServiceTest {
         //then
         assertThat(token.getAccessToken()).isEqualTo("jwtToken");
     }
+
+    @Test
+    public void 회원탈퇴_테스트() {
+
+        //when
+        memberService.unregister(1L);
+    }
 }
