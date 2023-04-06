@@ -12,7 +12,7 @@ public class AccommodationDto {
     private String name;
     private Integer time;
     private Integer price;
-    private Integer address;
+    private String address;
     private Double lat;
     private Double lng;
     private Integer type;

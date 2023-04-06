@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Accommodation {
 
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String name;
     private Integer time;
@@ -27,7 +26,7 @@ public class Accommodation {
     private Integer checkOut;
     private Double lat;
     private Double lng;
-    private Integer address;
+    private String address;
     private Integer category;
     private String link;
     private String homePage;
@@ -38,7 +37,7 @@ public class Accommodation {
 
     @Builder
     public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, Integer address, Integer category,
+        Integer checkOut, String address, Integer category,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
@@ -53,7 +52,7 @@ public class Accommodation {
 
     @Builder
     public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, Integer address, Integer category, Double lat, Double lng,
+        Integer checkOut, String address, Integer category, Double lat, Double lng,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
