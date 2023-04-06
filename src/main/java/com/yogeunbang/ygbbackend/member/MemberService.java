@@ -3,6 +3,7 @@ package com.yogeunbang.ygbbackend.member;
 import com.yogeunbang.ygbbackend.member.dto.TokenDto;
 import com.yogeunbang.ygbbackend.member.entity.JwtManager;
 import com.yogeunbang.ygbbackend.member.entity.Member;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,4 +33,8 @@ public class MemberService {
         naverService.unregister(member);
     }
 
+    public Member getMember(String accessToken) {
+        Long memberId = jwtManager.getMemberId(accessToken);
+        return memberRepo.getReferenceById(memberId);
+    }
 }

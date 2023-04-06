@@ -1,12 +1,15 @@
 package com.yogeunbang.ygbbackend.member.entity;
 
-import com.yogeunbang.ygbbackend.member.dto.TokenDto;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.time.Duration;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
@@ -37,14 +40,17 @@ public class JwtManager {
 
     }
 
-    public boolean validateToken(String jwtToken) {
+    public Jws<Claims> validateToken(String jwtToken) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
-            return true;
+            return Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
         } catch (JwtException e) {
             log.info(e.toString());
         }
-        return false;
+        throw new RuntimeException("유효하지 않은 토큰입니다.");
     }
 
+    public Long getMemberId(String jwtToken) {
+        Jws<Claims> jws = validateToken(jwtToken);
+        return jws.getBody().get("id", Long.class);
+    }
 }
