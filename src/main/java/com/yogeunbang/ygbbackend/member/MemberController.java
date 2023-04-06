@@ -22,9 +22,9 @@ public class MemberController {
         return memberService.authenticate(token);
     }
 
-    @DeleteMapping("/members/{id}")
-    public void unregister(@PathVariable Long id) {
-        memberService.unregister(id);
+    @DeleteMapping("/members")
+    public void unregister(@RequestHeader(value = "Authorization") String accessToken) {
+        memberService.unregister(accessToken);
     }
 
     @GetMapping("/members")

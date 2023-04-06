@@ -49,8 +49,8 @@ public class JwtManager {
         throw new RuntimeException("유효하지 않은 토큰입니다.");
     }
 
-    public Long getMemberId(String jwtToken) {
+    public String getMemberId(String jwtToken) {
         Jws<Claims> jws = validateToken(jwtToken);
-        return jws.getBody().get("id", Long.class);
+        return jws.getBody().get("id", String.class);
     }
 }
