@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Accommodation {
 
-    @Id @GeneratedValue
+    @Id
     private Long id;
     private String name;
     private Integer time;
@@ -30,6 +29,7 @@ public class Accommodation {
     private String address;
     private Integer category;
     private String link;
+    private String homePage;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "spot_id")
     private Spot spot;
     @OneToMany(mappedBy = "accommodation")
