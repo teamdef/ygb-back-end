@@ -30,7 +30,8 @@ test {
 	jacoco {
 		excludes += [
 				"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
-				"com/yogeunbang/ygbbackend/*repo*"
+				"com/yogeunbang/ygbbackend/*repo*",
+				"com/yogeunbang/ygbbackend/member/NaverService.class",
 		]
 	}
 }
@@ -47,19 +48,30 @@ jacocoTestReport {
 			fileTree(dir: it,
 					exclude: [
 							"com/yogeunbang/ygbbackend/YgbBackEndApplication.class",
-							"com/yogeunbang/ygbbackend/*repo*"
+							"com/yogeunbang/ygbbackend/*repo*",
+							"com/yogeunbang/ygbbackend/member/NaverService.class",
 					])
 		}))
 	}
 
-	finalizedBy jacocoTestCoverageVerification
 }
 
 jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+
 	violationRules {
 		rule {
+			enabled = true
 
 			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.8
+			}
+
+			limit {
+				counter = "BRANCH"
+				value = "COVEREDRATIO"
 				minimum = 0.8
 			}
 		}
@@ -75,6 +87,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.google.code.gson:gson'
 }
 
 tasks.named('test') {
