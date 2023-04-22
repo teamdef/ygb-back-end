@@ -64,6 +64,6 @@ public class MemberServiceTest {
     public void 회원탈퇴_테스트() {
 
         //when
-        memberService.unregister(1L);
+        memberService.unregister("accessToken");
     }
 }
