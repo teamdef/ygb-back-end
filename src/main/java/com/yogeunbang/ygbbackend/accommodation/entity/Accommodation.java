@@ -22,22 +22,23 @@ public class Accommodation {
     private String name;
     private Integer time;
     private Integer price;
-    private Integer checkIn;
-    private Integer checkOut;
+    private String checkIn;
+    private String checkOut;
     private Double lat;
     private Double lng;
     private String address;
     private Integer category;
     private String link;
     private String homePage;
+    private Integer flag;
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "spot_id")
     private Spot spot;
     @OneToMany(mappedBy = "accommodation")
     private List<AccommodationImage> images = new ArrayList<>();
 
     @Builder
-    public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, String address, Integer category,
+    public Accommodation(String name, Integer time, Integer price, String checkIn,
+        String checkOut, String address, Integer category,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
@@ -51,8 +52,8 @@ public class Accommodation {
     }
 
     @Builder
-    public Accommodation(String name, Integer time, Integer price, Integer checkIn,
-        Integer checkOut, String address, Integer category, Double lat, Double lng,
+    public Accommodation(String name, Integer time, Integer price, String checkIn,
+        String checkOut, String address, Integer category, Double lat, Double lng,
         String link, Spot spot) {
         this.name = name;
         this.time = time;
