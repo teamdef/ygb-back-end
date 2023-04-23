@@ -1,5 +1,6 @@
 package com.yogeunbang.ygbbackend.member;
 
+import com.yogeunbang.ygbbackend.infra.FileProcessService;
 import com.yogeunbang.ygbbackend.member.dto.TokenDto;
 import com.yogeunbang.ygbbackend.member.entity.JwtManager;
 import com.yogeunbang.ygbbackend.member.entity.Member;
@@ -7,6 +8,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Transactional(readOnly = true)
 @Service
@@ -16,6 +18,7 @@ public class MemberService {
     private final MemberRepo memberRepo;
     private final NaverService naverService;
     private final JwtManager jwtManager;
+    private final FileProcessService fileProcessService;
 
     @Transactional
     public TokenDto authenticate(TokenDto token) {
@@ -43,5 +46,12 @@ public class MemberService {
     public Member getMember(String accessToken) {
         String memberId = jwtManager.getMemberId(accessToken);
         return memberRepo.findByIdentity(memberId).get(0);
+    }
+
+    @Transactional
+    public void updateMember(String accessToken, String nickName, MultipartFile image) {
+        Member member = getMember(accessToken);
+        String imageLink = fileProcessService.uploadImage(image);
+        member.updateNickNameAndImage(nickName, imageLink);
     }
 }
