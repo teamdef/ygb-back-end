@@ -89,6 +89,7 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'com.google.code.gson:gson'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
