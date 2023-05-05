@@ -38,4 +38,8 @@ public class AccommodationService {
         return accommodationRepo.findByFlag(0, pageable)
             .stream().map(AccommodationDto::new).collect(Collectors.toList());
     }
+
+    public AccommodationDto findAccommodationById(Long id) {
+        return new AccommodationDto(accommodationRepo.getReferenceById(id));
+    }
 }

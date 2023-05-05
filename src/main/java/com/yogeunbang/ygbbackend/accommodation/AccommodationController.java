@@ -36,4 +36,11 @@ public class AccommodationController {
     public ResponseEntity<List<AccommodationDto>> findCrawlingAccommodations(Pageable pageable) {
         return ResponseEntity.ok(accommodationService.findCrawledAccommodations(pageable));
     }
+
+    @GetMapping("/accommodations/{accommodation_id}")
+    public ResponseEntity<AccommodationDto> findAccommodationById(
+        @PathVariable("accommodation_id") Long id) {
+
+        return ResponseEntity.ok(accommodationService.findAccommodationById(id));
+    }
 }
