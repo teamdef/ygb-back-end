@@ -3,7 +3,13 @@ package com.yogeunbang.ygbbackend.infra;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.yogeunbang.ygbbackend.accommodation.entity.Accommodation;
+import com.yogeunbang.ygbbackend.accommodation.entity.AccommodationImage;
+import com.yogeunbang.ygbbackend.accommodation.repo.AccommodationImageRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileProcessService {
 
     private final AmazonS3Service amazonS3Service;
+    private final AccommodationImageRepo accommodationImageRepo;
 
     public String uploadImage(MultipartFile file) {
         String fileName = amazonS3Service.getFolderName() + createFileName(file.getOriginalFilename());
@@ -30,6 +37,14 @@ public class FileProcessService {
         return amazonS3Service.getFileUrl(fileName);
     }
 
+    public List<String> uploadMultiImage(List<MultipartFile> files) {
+        List<String> imgUrls = new ArrayList<>();
+        for (MultipartFile file: files) {
+            imgUrls.add(uploadImage(file));
+        }
+        return imgUrls;
+    }
+
     private String createFileName(String originalFileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFileName));
     }
@@ -45,5 +60,12 @@ public class FileProcessService {
     private String getFileName(String url) {
         String[] paths = url.split("/");
         return paths[paths.length-2] + "/" + paths[paths.length-1];
+    }
+
+    public void mappingImages(List<String> imgUrls, Accommodation accommodation) {
+        for (String img : imgUrls) {
+            AccommodationImage accommodationImage = new AccommodationImage(img, accommodation);
+            accommodationImageRepo.save(accommodationImage);
+        }
     }
 }
