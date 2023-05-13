@@ -27,4 +27,9 @@ public class Member {
     public void updateAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+    public void updateNickNameAndImage(String nickName, String imageLink) {
+        this.nickname = nickName;
+        this.profileImage = imageLink;
+    }
 }

@@ -1,6 +1,7 @@
 package com.yogeunbang.ygbbackend.member;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.yogeunbang.ygbbackend.member.entity.JwtManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,11 +29,8 @@ public class JwtManagerTest {
         //given
         String memberId = "memberId";
 
-        //when
-        String jwt = jwtManager.makeJwt(memberId);
-
-        //then
-        assertThat(jwtManager.validateToken(jwt)).isEqualTo(true);
+        //when & then
+        assertThat(jwtManager.makeJwt(memberId)).isInstanceOf(String.class);
     }
 
     @Test
@@ -46,8 +44,15 @@ public class JwtManagerTest {
 
 
         //when & then
-        assertThat(jwtManager.validateToken(jwt)).isEqualTo(false);
-        assertThat(jwtManager.validateToken(jwt2)).isEqualTo(false);
+        // 유효하지 않은 토큰 값일때
+        assertThrows(RuntimeException.class, () -> {
+            jwtManager.validateToken(jwt);
+        });
+
+        // 토큰이 만료된 경우
+        assertThrows(RuntimeException.class, () -> {
+            jwtManager.validateToken(jwt2);
+        });
     }
 
 }

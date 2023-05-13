@@ -2,6 +2,7 @@ package com.yogeunbang.ygbbackend.member;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -50,8 +51,12 @@ public class MemberControllerTest {
     @Test
     public void 회원탈퇴_테스트() throws Exception {
 
+        //given
+        doNothing().when(memberService).unregister(any());
+
         //when & then
-        mvc.perform(delete("/members/1"))
+        mvc.perform(delete("/members")
+                .header("Authorization","사용자 accessToken"))
             .andExpect(status().isOk());
     }
 }
