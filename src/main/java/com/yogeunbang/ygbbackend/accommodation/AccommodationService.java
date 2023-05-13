@@ -9,6 +9,7 @@ import com.yogeunbang.ygbbackend.accommodation.repo.SpotRepo;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +32,14 @@ public class AccommodationService {
     public List<AccommodationDto> findAccommodations(Long spot_id) {
         return accommodationRepo.findBySpot_Id(spot_id)
             .stream().map(AccommodationDto::new).collect(Collectors.toList());
+    }
+
+    public List<AccommodationDto> findCrawledAccommodations(Pageable pageable) {
+        return accommodationRepo.findByFlag(0, pageable)
+            .stream().map(AccommodationDto::new).collect(Collectors.toList());
+    }
+
+    public AccommodationDto findAccommodationById(Long id) {
+        return new AccommodationDto(accommodationRepo.getReferenceById(id));
     }
 }
