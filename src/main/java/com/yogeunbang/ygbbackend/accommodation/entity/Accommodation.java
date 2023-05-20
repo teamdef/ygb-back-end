@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.yogeunbang.ygbbackend.accommodation.dto.AccommodationDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,5 +68,18 @@ public class Accommodation {
         this.category = category;
         this.link = link;
         this.spot = spot;
+    }
+
+    public void enroll(AccommodationDto accommodationDto) {
+        this.name = accommodationDto.getName();
+        this.time = accommodationDto.getTime();
+        this.price = accommodationDto.getPrice();
+        this.address = accommodationDto.getAddress();
+        this.category = accommodationDto.getType();
+        this.flag = 1;
+    }
+
+    public void addImage(AccommodationImage accommodationImage) {
+        images.add(accommodationImage);
     }
 }

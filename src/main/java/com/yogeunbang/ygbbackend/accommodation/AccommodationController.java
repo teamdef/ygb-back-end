@@ -7,9 +7,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,8 +38,15 @@ public class AccommodationController {
 
     @GetMapping("/accommodations/{accommodation_id}")
     public ResponseEntity<AccommodationDto> findAccommodationById(
-        @PathVariable("accommodation_id") Long id) {
+            @PathVariable("accommodation_id") Long id) {
 
         return ResponseEntity.ok(accommodationService.findAccommodationById(id));
+    }
+
+    @PutMapping("/accommodations")
+    public void enrollAccommodation(
+            @RequestPart("accommodation") AccommodationDto accommodation,
+            @RequestPart("image") List<MultipartFile> images) {
+        accommodationService.enrollAccommodation(accommodation, images);
     }
 }

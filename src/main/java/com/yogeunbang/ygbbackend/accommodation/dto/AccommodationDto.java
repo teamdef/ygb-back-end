@@ -4,8 +4,10 @@ import com.yogeunbang.ygbbackend.accommodation.entity.Accommodation;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class AccommodationDto {
 
     private Long id;
